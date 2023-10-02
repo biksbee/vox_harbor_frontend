@@ -14,7 +14,7 @@ interface IUserPage {
 
 export const UserPage:FC<IUserPage> = ({}) => {
 
-    const user = useAppSelector(state => state.search.result)
+    const user = useAppSelector(state => state.search.user)
     const status_user = useAppSelector(state => state.search.status)
 
 
