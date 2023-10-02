@@ -2,26 +2,39 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+html {
+    @apply w-full overflow-x-hidden
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+@layer base {
+    .cb {
+        @apply border-[1px] border-[#f00]
+    }
+    .jit {
+        @apply justify-center items-center
+    }
+    .size-full {
+        @apply w-full h-full
+    }
+    .gitLink {
+        @apply italic hover:cursor-pointer hover:underline duration-500
+    }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+@layer utilities{
+    .logo_line{
+        -webkit-clip-path: polygon(0 94%, 100% 50%, 100% 100%, 0 100%);
+        clip-path: polygon(0 94%, 100% 50%, 100% 100%, 0 100%);
+        /*background: linear-gradient(90deg, rgba(58,180,157,1) 0%, rgba(29,208,253,1) 50%, rgba(193,69,252,1) 100%);*/
+    }
+    .logo_text{
+        background: linear-gradient(90deg, rgba(58,180,157,1) 0%, rgba(29,208,253,1) 50%, rgba(193,69,252,1) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .text{
+        color: #4848E8FF;
+    }
+
 }
+

@@ -1,6 +1,5 @@
 'use client'
 import { FC } from "react";
-import res from "@/mock/dataCharts.json"
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -25,11 +24,13 @@ ChartJS.register(
 );
 
 interface IChartsLiner {
+  res: any;
   chooseChart: string;
   title: string
 }
 
 export const ChartsLiner:FC<IChartsLiner> = ({
+    res,
     chooseChart,
     title,
                                              }) => {
@@ -64,21 +65,44 @@ export const ChartsLiner:FC<IChartsLiner> = ({
     )`
   }
 
+    const q = res.data[res.data.length-1]["data.key"].slice(0,1).map((item, index) => (
+        {
+            label: item,
+            data: res.data.map(item =>  +item["data.value"][index]),
+            // borderColor: cC(index),
+            backgroundColor: cC(index),
+        }
+    ))
+    console.log(q)
 
   const data = {
     labels,
-    datasets: res.data[res.data.length-1]["data.key"].map((item, index) => (
-        index !== 0 ?
+    datasets: chooseChart === "view" ?
+        res.data[res.data.length-1]["data.key"].slice(0,1).map((item, index) => (
             {
               label: item,
-              data: res.data.map(item =>  index !== 0 ? +item["data.value"][index] : null),
+              data: res.data.map(item =>  +item["data.value"][index]),
               // borderColor: cC(index),
               backgroundColor: cC(index),
-            } : null
-    ))
+            }
+        ))
+        :
+        res.data[res.data.length-1]["data.key"].slice(1).map((item, index) => (
+            {
+                label: item,
+                data: res.data.map(item =>  index !== 0 ? +item["data.value"][index] : null),
+                // borderColor: cC(index),
+                backgroundColor: cC(index),
+            }
+        ))
   };
 
   return (
-      <Line options={options} data={data} />
+      <div>
+        <div className={"w-full flex justify-center text-[26px]"}>
+          {chooseChart}
+        </div>
+        <Line options={options} data={data} />
+      </div>
   )
 }
