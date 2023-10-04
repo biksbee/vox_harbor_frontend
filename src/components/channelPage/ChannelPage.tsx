@@ -13,15 +13,15 @@ export const ChannelPage:FC<IChannel> = () => {
 
     const router = useRouter()
     const dispatch = useAppDispatch()
-    const chat = useAppSelector(state => state.search.result)
-
+    const chat = useAppSelector(state => state.search.chat)
+    const status = useAppSelector(state => state.search.status)
 
     useEffect(() => {
-        if(chat.id === undefined){
+        if(chat.id === -1){
             router.push('/')
         }
     }, []);
-    // -1001225974297
+
     return(
         <div>
             <div>

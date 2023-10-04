@@ -40,12 +40,6 @@ export const DropDown:FC<IDropDown> = ({}) => {
         addResult(obj)
     }
 
-    useEffect(() => {
-        if(status === "success"){
-            console.log(res_search.users)
-        }
-    }, [status]);
-
     const render = (type: string) => {
         if (status === "init" || status === "loading") {
             return <div>Loading {type} ...</div>;

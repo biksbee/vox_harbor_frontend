@@ -5,7 +5,6 @@ interface IUser {
     user_id: number;
     usernames: string[];
     names: string[];
-    status: "init" | "loading" | "error" | "success";
 }
 
 interface IChat {
@@ -16,21 +15,54 @@ interface IChat {
     bot_index: number;
     added: string;
     type: string;
-    status: "init" | "loading" | "error" | "success";
 }
 
 interface ISearch {
-    search: [users: IUser, chats: IChat]
+    search: {
+        users: IUser[],
+        chats: IChat[]
+    }
+    user: IUser,
+    chat: IChat,
     status: "init" | "loading" | "error" | "success";
 }
 
-interface IResult {
-    result: IUser | IChat
-}
 
 const initialState = {
-    search: [],
-    result: {},
+    search: {
+        users: [
+            {
+                user_id: 0,
+                usernames: [""],
+                names: [""]
+            }
+        ],
+        chats: [
+            {
+                id: 0,
+                name: "",
+                join_string: "",
+                shard: 0,
+                bot_index: 0,
+                added: "",
+                type: ""
+            }
+        ]
+    },
+    user: {
+        user_id: -1,
+        usernames: [""],
+        names: [""]
+    },
+    chat: {
+        id: -1,
+        name: "",
+        join_string: "",
+        shard: 0,
+        bot_index: 0,
+        added: "",
+        type: ""
+    },
     status: "init"
 }
 
@@ -39,7 +71,9 @@ export const searchSlice = createSlice({
     initialState,
     reducers: {
         addResult: (state, action) => {
-            state.result = action.payload
+            if(state.search.chats.length === 0)
+                state.user = action.payload
+            else state.chat = action.payload
         }
     },
     extraReducers: builder => {
@@ -50,7 +84,6 @@ export const searchSlice = createSlice({
             .addCase(search.fulfilled, (state, action) => {
                 state.status = 'success'
                 state.search = action.payload
-                state.result = state.search
             })
             .addCase(search.rejected, (state) => {
                 state.status = 'error'

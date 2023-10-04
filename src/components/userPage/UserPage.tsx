@@ -14,7 +14,7 @@ interface IUserPage {
 
 export const UserPage:FC<IUserPage> = ({}) => {
 
-    const user = useAppSelector(state => state.search.result)
+    const user = useAppSelector(state => state.search.user)
     const status_user = useAppSelector(state => state.search.status)
 
 
@@ -27,7 +27,7 @@ export const UserPage:FC<IUserPage> = ({}) => {
     const router = useRouter()
 
     useEffect(() => {
-        if(user.user_id === undefined){
+        if(user.user_id === -1){
             router.push('/')
         } else {
             setId(user.user_id)
@@ -36,7 +36,9 @@ export const UserPage:FC<IUserPage> = ({}) => {
     }, []);
 
     useEffect(() => {
-        dispatch(getMessageById({id, offset}))
+        if(user.user_id !== -1){
+            dispatch(getMessageById({id, offset}))
+        }
     }, [offset]);
 
     const render = (status: string) => {

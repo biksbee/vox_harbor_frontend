@@ -11,7 +11,8 @@ import {
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import faker from 'faker'
+import { reactionArtem } from "@/hooks/reaction";
+
 
 ChartJS.register(
     CategoryScale,
@@ -23,17 +24,32 @@ ChartJS.register(
     Legend
 );
 
+interface IItem {
+    id: number,
+    channel_id: number,
+    post_date: string,
+    point_date: string,
+    keys: string[],
+    values: number[],
+    bot_index: number,
+    shard: number
+}
+
 interface IChartsLiner {
-  res: any;
+  res: IItem[];
   chooseChart: string;
   title: string
 }
+
 
 export const ChartsLiner:FC<IChartsLiner> = ({
     res,
     chooseChart,
     title,
                                              }) => {
+
+    const dataForChart = reactionArtem(res);
+
 
   const options = {
     responsive: true,
@@ -48,51 +64,37 @@ export const ChartsLiner:FC<IChartsLiner> = ({
     },
   };
 
-
   const labels: string[] = []
 
-  res.data.forEach((element, index) => {
+  res.forEach((element: IItem, index: number) => {
     labels.push(
         element.point_date.slice(11,)
     )
   })
 
+    const randomFunc = (prev: number): number => {
+        const x = Math.round(Math.random()*1000)
+        if(x >= 255){
+            return randomFunc(x/prev)
+        } else return x
+    }
+
   const cC = (i: number) => {
     return `rgb(
-    ${faker.datatype.number({ min: 0, max: 255 })}, 
-    ${faker.datatype.number({ min: 0, max: 255 })}, 
-    ${faker.datatype.number({ min: 0, max: 255 })}
+    ${randomFunc(1)}, 
+    ${randomFunc(1)}, 
+    ${randomFunc(1)}
     )`
   }
 
-    const q = res.data[res.data.length-1]["data.key"].slice(0,1).map((item, index) => (
-        {
-            label: item,
-            data: res.data.map(item =>  +item["data.value"][index]),
-            // borderColor: cC(index),
-            backgroundColor: cC(index),
-        }
-    ))
-    console.log(q)
-
   const data = {
-    labels,
-    datasets: chooseChart === "view" ?
-        res.data[res.data.length-1]["data.key"].slice(0,1).map((item, index) => (
+    labels: labels,
+    datasets: res[res.length-1].keys.slice(chooseChart === "view" ? 0 : 1, chooseChart === "view" ? 1 : res.length).map((item, index: number) => (
             {
               label: item,
-              data: res.data.map(item =>  +item["data.value"][index]),
-              // borderColor: cC(index),
-              backgroundColor: cC(index),
-            }
-        ))
-        :
-        res.data[res.data.length-1]["data.key"].slice(1).map((item, index) => (
-            {
-                label: item,
-                data: res.data.map(item =>  index !== 0 ? +item["data.value"][index] : null),
-                // borderColor: cC(index),
-                backgroundColor: cC(index),
+              data: dataForChart[`${item}`],
+              borderColor: cC(index),
+              // backgroundColor: cC(index),
             }
         ))
   };

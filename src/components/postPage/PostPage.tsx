@@ -8,8 +8,9 @@ import { PostNavbar } from "@/components/postNavbar/PostNavbar";
 
 import {ChartsLiner} from "@/components/charts/ChartsLiner";
 
-import {useAppDispatch} from "@/app/store/hooks/useActions";
+import {useAppDispatch, useAppSelector} from "@/app/store/hooks/useActions";
 
+import {reactionByUrl} from "@/app/store/features/post/post";
 import res from "@/mock/dataCharts.json"
 
 interface IPostPage {
@@ -19,14 +20,17 @@ interface IPostPage {
 export const PostPage:FC<IPostPage> = ({}) => {
 
 
-    const [value, setValue] = useState<string>("")
+    const [value, setValue] = useState<string>("https://t.me/sotaproject/67243")
     const [type, setType] = useState<string>("")
     const [disabled, setDisabled] = useState<boolean>(true)
 
-    const [open, setOpen] = useState<boolean>(true)
+    const [open, setOpen] = useState<boolean>(false)
     const [chooseChart, setChooseChart] = useState<"view" | "emoji">("view")
 
     const dispatch = useAppDispatch()
+    const status = useAppSelector(state => state.reaction.status)
+    const res = useAppSelector(state => state.reaction.value)
+
 
     const expression: RegExp = inputValidation["link"]
 
@@ -41,22 +45,32 @@ export const PostPage:FC<IPostPage> = ({}) => {
 
     const sendLinkByPost = () => {
         setOpen(true)
-        // dispatch(search(value)) // поиск по ссылке
-        setValue("send")
+        dispatch(reactionByUrl(value))
+        // setValue("send")
+    }
+
+
+    const render = () => {
+        if (status === "init" || status === "loading") {
+            return <div>Loading ...</div>;
+        }
+        if(status === "error"){
+            return "Error happen";
+        }
     }
 
     return(
         <div>
             <div className={"mb-[50px]"}>
                 <div className={"text-[#f00]"}>
-                    https://t.me/poperechnyi/408
+                    https://t.me/sotaproject/67243
                 </div>
                 <div className={"flex flex-col bg-wraper rounded-[22px] py-[22px] px-[12px]"}>
                     <div className={"flex gap-x-[20px]"}>
                         <div className={"relative w-full"}>
                             <Input
                                 id={"userValue"}
-                                text={"ссылка на пост"}
+                                text={"ссылка на пост, url:"}
                                 value={value}
                                 setValue={setValue}
                                 setType={setType}
@@ -81,19 +95,24 @@ export const PostPage:FC<IPostPage> = ({}) => {
                 </div>
                 {
                     open &&
-                    <div className={"mt-[50px] flex justify-center"}>
-                        <PostNavbar
-                            setChooseChart={setChooseChart}
-                        />
-                    </div>
+                    <>
+                        <div className={"mt-[50px] flex justify-center"}>
+                            <PostNavbar
+                                setChooseChart={setChooseChart}
+                            />
+                        </div>
+                        {
+                            render() ||
+                            <div className={"mt-[30px] w-full"}>
+                                <ChartsLiner
+                                    res={res}
+                                    chooseChart={chooseChart}
+                                    title={`SOME CHARTS`}
+                                />
+                            </div>
+                        }
+                    </>
                 }
-                <div className={"mt-[30px] w-full"}>
-                    <ChartsLiner
-                        res={res}
-                        chooseChart={chooseChart}
-                        title={`SOME CHARTS`}
-                    />
-                </div>
             </div>
         </div>
     )

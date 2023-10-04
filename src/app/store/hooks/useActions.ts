@@ -6,11 +6,13 @@ import {AppDispatch, RootState} from "@/app/store/store";
 import { searchAction } from "@/app/store/features/search/search";
 import { messageAction } from "@/app/store/features/messages/message";
 import { textAction } from "@/app/store/features/messages/text";
+import { reactionAction } from "@/app/store/features/post/post";
 
 const rootActions = {
     ...searchAction,
     ...messageAction,
     ...textAction,
+    ...reactionAction,
 }
 
 export const useAppDispatch = useDispatch<AppDispatch>;
