@@ -1,5 +1,7 @@
+'use client'
 import { FC } from "react";
 import cn from 'classnames';
+import { useRouter } from "next/navigation";
 
 interface IItem {
     text: string;
@@ -9,9 +11,11 @@ interface IItem {
 
 export const Item:FC<IItem> = ({text, href, disabled}) => {
 
+    const router = useRouter()
+
     return(
-        <a href={href}>
             <li
+                onClick={() => router.push(`${href}`)}
                 className={cn(
                     "text-[20px]",
                     !disabled ? " hover:opacity-75 duration-500 cursor-pointer" : "cursor-none"
@@ -19,6 +23,5 @@ export const Item:FC<IItem> = ({text, href, disabled}) => {
             >
                 {text}
             </li>
-        </a>
     )
 }

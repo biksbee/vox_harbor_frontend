@@ -50,12 +50,12 @@ const initialState = {
         ]
     },
     user: {
-        user_id: 0,
+        user_id: -1,
         usernames: [""],
         names: [""]
     },
     chat: {
-        id: 0,
+        id: -1,
         name: "",
         join_string: "",
         shard: 0,
