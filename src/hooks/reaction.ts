@@ -16,22 +16,20 @@ interface IResult {
 
 export const reactionArtem = (res: IReaction[]) => {
 
-    let quan = 0;
+    let quan = Array();
     const result: IResult = Object.create(null)
     res.forEach((el, index) => {
         let pos = 0;
         el.keys.forEach((emoji, pos) => {
             if(!(emoji in result)){
                 result[emoji] =  Array(index).fill(0)
-                quan++
+                quan.push(emoji)
             }
 
             result[emoji].push(el.values[pos])
         })
 
     })
-    result.length = [quan]
-    console.log(result)
-    return result;
+    return {result, quan};
 }
 

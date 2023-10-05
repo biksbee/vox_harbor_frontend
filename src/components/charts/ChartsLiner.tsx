@@ -87,12 +87,16 @@ export const ChartsLiner:FC<IChartsLiner> = ({
     )`
   }
 
+
   const data = {
     labels: labels,
-    datasets: res[res.length-1].keys.slice(chooseChart === "view" ? 0 : 1, chooseChart === "view" ? 1 : res.length).map((item, index: number) => (
+    datasets: dataForChart.quan.slice(
+        chooseChart === "view" ? 0 : 1,
+        chooseChart === "view" ? 1 : dataForChart.quan.length
+    ).map((item, index) => (
             {
               label: item,
-              data: dataForChart[`${item}`],
+              data: dataForChart.result[`${item}`],
               borderColor: cC(index),
               // backgroundColor: cC(index),
             }
