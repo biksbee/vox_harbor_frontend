@@ -96,7 +96,7 @@ export const ChartsLiner:FC<IChartsLiner> = ({
     ).map((item, index) => (
             {
               label: item,
-              data: dataForChart.result[`${item}`],
+              data: dataForChart.result.item,
               borderColor: cC(index),
               // backgroundColor: cC(index),
             }
