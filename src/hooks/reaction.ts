@@ -1,3 +1,4 @@
+import moment from "moment";
 
 interface IReaction {
     id: number,
@@ -10,28 +11,41 @@ interface IReaction {
     shard: number
 }
 
-interface IResult {
-    [key: string]: number[];
+interface IReactionPoint {
+    x: number,
+    y: number
 }
 
-export const reactionArtem = (res: IReaction[]) => {
+export const generatePoints = (res: IReaction[]) => {
+    const header = res.at(-1)?.keys;
+    const result = new Map<string, IReactionPoint[]>();
+    header?.forEach((key) => {
+        result.set(key, []);
+    })
 
-    let quan = 0;
-    const result: IResult = Object.create(null)
-    res.forEach((el, index) => {
-        let pos = 0;
-        el.keys.forEach((emoji, pos) => {
-            if(!(emoji in result)){
-                result[emoji] =  Array(index).fill(0)
-                quan++
-            }
+    res.forEach((el) => {
+        let keysIndexes = new Map<string, number>;
+        el.keys.forEach((key, index) => {
+            keysIndexes.set(key, index);
+        })
 
-            result[emoji].push(el.values[pos])
+        header?.forEach((key) => {
+            let value: number;
+            if (keysIndexes.has(key))
+                value = el.values[keysIndexes.get(key)!];
+            else
+                value = 0;
+
+            result.get(key)!.push(
+                {
+                    x: moment(el.point_date).valueOf(),
+                    y: value
+                }
+            );
         })
 
     })
-    result.length = [quan]
-    console.log(result)
+
     return result;
 }
 

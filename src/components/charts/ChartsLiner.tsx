@@ -1,28 +1,40 @@
 'use client'
-import { FC } from "react";
+import {FC} from "react";
 import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
+    CategoryScale,
+    Chart as ChartJS,
+    Legend,
+    LineElement,
+    LinearScale,
+    PointElement,
+    TimeScale,
+    Title,
+    Tooltip,
 } from 'chart.js';
-import { Line } from 'react-chartjs-2';
-import { reactionArtem } from "@/hooks/reaction";
-
+import {Line} from 'react-chartjs-2';
+import {generatePoints} from "@/hooks/reaction";
+import 'chartjs-adapter-moment';
+import autocolors from 'chartjs-plugin-autocolors';
 
 ChartJS.register(
     CategoryScale,
+    Legend,
+    LineElement,
     LinearScale,
     PointElement,
-    LineElement,
+    TimeScale,
     Title,
     Tooltip,
-    Legend
+    autocolors,
 );
+
+// This is a hack. Suggested by https://github.com/chartjs/chartjs-plugin-zoom/issues/617#issuecomment-1262764904
+if (typeof window !== 'undefined') {
+  (async () => {
+    const { default: zoomPlugin } = await import('chartjs-plugin-zoom');
+    ChartJS.register(zoomPlugin);
+  })();
+}
 
 interface IItem {
     id: number,
@@ -36,75 +48,74 @@ interface IItem {
 }
 
 interface IChartsLiner {
-  res: IItem[];
-  chooseChart: string;
-  title: string
+    res: IItem[];
+    chooseChart: string;
+    title: string
 }
 
+export const ChartsLiner: FC<IChartsLiner> = (liner) => {
+    const {res, chooseChart, title} = liner;
+    const dataForChart = generatePoints(res);
 
-export const ChartsLiner:FC<IChartsLiner> = ({
-    res,
-    chooseChart,
-    title,
-                                             }) => {
+    const options = {
+        responsive: true,
+        interaction: {
+            intersect: false
+        },
+        plugins: {
+            legend: {
+                position: 'top' as const,
+            },
+            title: {
+                display: true,
+                text: title,
+            },
+            autocolors: {
+                mode: 'label' as const,
+            },
+            zoom: {
+                zoom: {
+                    drag: {
+                        enabled: true,
+                    },
+                    mode: 'x' as const,
+                }
+            },
+        },
+        scales: {
+            x: {
+                type: 'time' as const,
+            }
+        },
+        indexAxis: 'x' as const,
+    };
 
-    const dataForChart = reactionArtem(res);
-
-
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top' as const,
-      },
-      title: {
-        display: true,
-        text: title,
-      },
-    },
-  };
-
-  const labels: string[] = []
-
-  res.forEach((element: IItem, index: number) => {
-    labels.push(
-        element.point_date.slice(11,)
-    )
-  })
-
-    const randomFunc = (prev: number): number => {
-        const x = Math.round(Math.random()*1000)
-        if(x >= 255){
-            return randomFunc(x/prev)
-        } else return x
+    let keys: string[];
+    if (chooseChart === 'view') {
+        keys = ['@views'];
+    } else {
+        keys = res.at(-1)!.keys.filter((x) => {
+            return x !== '@views'
+        });
     }
 
-  const cC = (i: number) => {
-    return `rgb(
-    ${randomFunc(1)}, 
-    ${randomFunc(1)}, 
-    ${randomFunc(1)}
-    )`
-  }
-
-  const data = {
-    labels: labels,
-    datasets: res[res.length-1].keys.slice(chooseChart === "view" ? 0 : 1, chooseChart === "view" ? 1 : res.length).map((item, index: number) => (
+    const data = {
+        datasets: keys.map((item) => (
             {
-              label: item,
-              data: dataForChart[`${item}`],
-              borderColor: cC(index),
-              // backgroundColor: cC(index),
+                label: item,
+                data: dataForChart.get(item)!,
+                borderWidth: 3,
+                radius: 0,
             }
         ))
-  };
+    };
 
-  return (
-      <div>
-        <div className={"w-full flex justify-center text-[26px]"}>
-          {chooseChart}
+    return (
+        <div>
+            <div className={"w-full flex justify-center text-[26px]"}>
+                {chooseChart}
+            </div>
+            <Line options={options} data={data}/>
         </div>
-        <Line options={options} data={data} />
-      </div>
-  )
+    )
 }
