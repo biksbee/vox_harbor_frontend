@@ -25,7 +25,7 @@ export const PostPage:FC<IPostPage> = ({}) => {
     const [disabled, setDisabled] = useState<boolean>(true)
 
     const [open, setOpen] = useState<boolean>(false)
-    const [chooseChart, setChooseChart] = useState<"view" | "emoji">("view")
+    const [chooseChart, setChooseChart] = useState<"view" | "emoji">("emoji")
 
     const dispatch = useAppDispatch()
     const status = useAppSelector(state => state.reaction.status)
