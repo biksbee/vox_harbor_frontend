@@ -15,8 +15,6 @@ import {Line} from 'react-chartjs-2';
 import {generatePoints} from "@/hooks/reaction";
 import 'chartjs-adapter-moment';
 import autocolors from 'chartjs-plugin-autocolors';
-import zoomPlugin from 'chartjs-plugin-zoom';
-
 
 ChartJS.register(
     CategoryScale,
@@ -28,8 +26,15 @@ ChartJS.register(
     Title,
     Tooltip,
     autocolors,
-    zoomPlugin,
 );
+
+// This is a hack. Suggested by https://github.com/chartjs/chartjs-plugin-zoom/issues/617#issuecomment-1262764904
+if (typeof window !== 'undefined') {
+  (async () => {
+    const { default: zoomPlugin } = await import('chartjs-plugin-zoom');
+    ChartJS.register(zoomPlugin);
+  })();
+}
 
 interface IItem {
     id: number,
