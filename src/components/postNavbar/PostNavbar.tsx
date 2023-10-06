@@ -20,13 +20,13 @@ export const PostNavbar:FC<IPostNavbar> = ({setChooseChart}) => {
         <div>
             <div className={"flex w-max gap-x-[50px]"}>
                 <Button
-                    text={"просмотры"}
-                    handler={viewFunc}
+                    text={"реакции"}
+                    handler={emojiFunc}
                     type={"subPage"}
                 />
                 <Button
-                    text={"реакции"}
-                    handler={emojiFunc}
+                    text={"просмотры"}
+                    handler={viewFunc}
                     type={"subPage"}
                 />
             </div>
