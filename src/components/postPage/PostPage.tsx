@@ -103,6 +103,7 @@ export const PostPage:FC<IPostPage> = ({}) => {
                         <div className={"mt-[50px] flex justify-center"}>
                             <PostNavbar
                                 setChooseChart={setChooseChart}
+                                chooseChart={chooseChart}
                             />
                         </div>
                         <div className={"w-full flex justify-center text-[26px]"}>
