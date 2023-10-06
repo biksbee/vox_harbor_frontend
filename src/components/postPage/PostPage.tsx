@@ -11,16 +11,13 @@ import {ChartsLiner} from "@/components/charts/ChartsLiner";
 import {useAppDispatch, useAppSelector} from "@/app/store/hooks/useActions";
 
 import {reactionByUrl} from "@/app/store/features/post/post";
-import res from "@/mock/dataCharts.json"
 
 interface IPostPage {
 
 }
 
 export const PostPage:FC<IPostPage> = ({}) => {
-
-
-    const [value, setValue] = useState<string>("https://t.me/sotaproject/67243")
+    const [value, setValue] = useState<string>("")
     const [type, setType] = useState<string>("")
     const [disabled, setDisabled] = useState<boolean>(true)
 
@@ -54,22 +51,27 @@ export const PostPage:FC<IPostPage> = ({}) => {
         if (status === "init" || status === "loading") {
             return <div>Loading ...</div>;
         }
-        if(status === "error"){
-            return "Error happen";
+        if (status === "error") {
+            return "Error happened";
+        }
+        if (status === "not_found") {
+            return (
+                <div className={"text-[20px] text-center mt-[100px]"}>
+                    Упс... Кажется мы видим этот пост впервые и у нас нет для него никакой статистики!
+                    Мы обязательно добавим этот канал в нашу базу, если он соотвествует условиям.
+                </div>
+            )
         }
     }
 
     return(
             <div className={"mb-[50px] w-full"}>
-                <div className={"text-[#f00]"}>
-                    https://t.me/sotaproject/67243
-                </div>
                 <div className={"flex flex-col bg-wraper w-full rounded-[22px] py-[22px] px-[12px]"}>
                     <div className={"w-full flex gap-x-[20px]"}>
                         <div className={"relative w-full"}>
                             <Input
                                 id={"userValue"}
-                                text={"ссылка на пост, url:"}
+                                text={"ссылка на пост"}
                                 value={value}
                                 setValue={setValue}
                                 setType={setType}
@@ -89,7 +91,7 @@ export const PostPage:FC<IPostPage> = ({}) => {
                         </div>
                     </div>
                     <div className={"pt-[10px] px-[30px] text-[14px] text-inf"}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                        Сервис находится на стадии MVP. Пока мы индексируем лишь малю часть каналов, но наш охват постоянно расширяется!
                     </div>
                 </div>
                 {

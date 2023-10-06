@@ -6,7 +6,7 @@ import { Item } from "@/components/navbar/items/Item";
 export const Navbar:FC = () => {
 
     return(
-        <div className={"fixed w-full h-[55px] top-0 xl:px-[120px] xx:px-[60px] md:px-[40px] px-[15px]"}>
+        <div className={"z-20 fixed w-full bg-white h-[40px] top-0 xl:px-[120px] xx:px-[60px] md:px-[40px] px-[15px]"}>
             <div className={"flex h-full items-center justify-between"}>
                 <div className={"flex items-center"}>
                     <Logo />
@@ -19,7 +19,7 @@ export const Navbar:FC = () => {
                     {/*    href={"/user"}*/}
                     {/*/>*/}
                     <Item
-                        text={"пост"}
+                        text={"Посты"}
                         href={"/post"}
                     />
                     {/*<Item*/}
@@ -27,7 +27,7 @@ export const Navbar:FC = () => {
                     {/*    href={"/channel"}*/}
                     {/*/>*/}
                     <Item
-                        text={"бот"}
+                        text={"Сообщения"}
                         href={"/bot"}
                     />
                 </ul>

@@ -18,7 +18,7 @@ export const PostNavbar:FC<IPostNavbar> = ({setChooseChart}) => {
 
     return(
         <div>
-            <div className={"flex w-max gap-x-[50px]"}>
+            <div className={"flex z-40 relative w-max gap-x-[50px]"}>
                 <Button
                     text={"реакции"}
                     handler={emojiFunc}
