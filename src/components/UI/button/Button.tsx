@@ -17,8 +17,8 @@ export const Button:FC<IButton> = ({text, handler, disabled, type}) => {
         <button
             className={cn(
                 buttonStyle[type],
-                "flex justify-center h-full rounded-[24px] px-[35px] items-center duration-700",
-                !disabled && "shadow-2xl hover:shadow-black",
+                "flex h-full rounded-[24px] px-[35px] items-center duration-700",
+                !disabled && "bg-white text-zinc-400 hover:text-[#000] shadow-2xl hover:shadow-black",
                 !disabled && "active:bg-[#AFAFBBFF]",
             )}
             onClick={handler}
