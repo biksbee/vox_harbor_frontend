@@ -70,7 +70,7 @@ export const PostPage:FC<IPostPage> = ({}) => {
     return(
             <div className={"mb-[50px] w-full"}>
                 <div className={"flex flex-col bg-wraper w-full rounded-[22px] py-[22px] px-[12px]"}>
-                    <div className={"w-full flex md:flex-row flex-col md:gap-x-[20px] gap-y-[20px]"}>
+                    <div className={"w-full flex gap-x-[20px]"}>
                         <div className={"relative w-full"}>
                             <Input
                                 id={"userValue"}
@@ -84,7 +84,7 @@ export const PostPage:FC<IPostPage> = ({}) => {
                                 // <DropDown/>
                             }
                         </div>
-                        <div className={"md:w-max w-full flex justify-end md:h-auto h-[48px]"}>
+                        <div>
                             <Button
                                 text={"отправить"}
                                 handler={sendLinkByPost}
