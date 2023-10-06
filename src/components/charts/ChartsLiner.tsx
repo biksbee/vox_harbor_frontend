@@ -111,11 +111,6 @@ export const ChartsLiner: FC<IChartsLiner> = (liner) => {
     };
 
     return (
-        <div>
-            <div className={"w-full flex justify-center text-[26px]"}>
-                {chooseChart}
-            </div>
             <Line options={options} data={data}/>
-        </div>
     )
 }

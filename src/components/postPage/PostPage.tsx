@@ -70,7 +70,7 @@ export const PostPage:FC<IPostPage> = ({}) => {
     return(
             <div className={"mb-[50px] w-full"}>
                 <div className={"flex flex-col bg-wraper w-full rounded-[22px] py-[22px] px-[12px]"}>
-                    <div className={"w-full flex gap-x-[20px]"}>
+                    <div className={"w-full flex md:flex-row flex-col md:gap-x-[20px] gap-y-[20px]"}>
                         <div className={"relative w-full"}>
                             <Input
                                 id={"userValue"}
@@ -84,7 +84,7 @@ export const PostPage:FC<IPostPage> = ({}) => {
                                 // <DropDown/>
                             }
                         </div>
-                        <div>
+                        <div className={"md:w-max w-full flex justify-end md:h-auto h-[48px]"}>
                             <Button
                                 text={"отправить"}
                                 handler={sendLinkByPost}
@@ -105,14 +105,19 @@ export const PostPage:FC<IPostPage> = ({}) => {
                                 setChooseChart={setChooseChart}
                             />
                         </div>
+                        <div className={"w-full flex justify-center text-[26px]"}>
+                            {chooseChart}
+                        </div>
                         {
                             render() ||
-                            <div className={"mt-[30px] w-full"}>
-                                <ChartsLiner
-                                    res={res}
-                                    chooseChart={chooseChart}
-                                    title={`SOME CHARTS`}
-                                />
+                            <div className={"xx:w-full w-[100vw] xx:h-auto xx:overflow-hidden overflow-x-scroll px-[10px]"}>
+                                <div className={"mt-[30px] xx:w-full w-[1024px] xx:h-auto h-[512px] "}>
+                                    <ChartsLiner
+                                        res={res}
+                                        chooseChart={chooseChart}
+                                        title={`SOME CHARTS`}
+                                    />
+                                </div>
                             </div>
                         }
                     </>
