@@ -36,6 +36,9 @@ html {
     .text{
         color: #4848E8FF;
     }
+    .flex_features {
+        flex: 0 1 auto;
+    }
 
 }
 

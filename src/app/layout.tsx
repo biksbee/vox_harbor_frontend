@@ -20,12 +20,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="relative h-screen">
+      <body className="relative h-screen flex flex-col">
           <Providers>
               <Navbar />
               {children}
           </Providers>
-          {/*<Footer />*/}
+          <Footer />
       </body>
     </html>
   )

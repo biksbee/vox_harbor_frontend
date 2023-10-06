@@ -118,6 +118,5 @@ export const PostPage:FC<IPostPage> = ({}) => {
                     </>
                 }
             </div>
-        </div>
     )
 }
