@@ -60,13 +60,12 @@ export const PostPage:FC<IPostPage> = ({}) => {
     }
 
     return(
-        <div>
-            <div className={"mb-[50px]"}>
+            <div className={"mb-[50px] w-full"}>
                 <div className={"text-[#f00]"}>
                     https://t.me/sotaproject/67243
                 </div>
-                <div className={"flex flex-col bg-wraper rounded-[22px] py-[22px] px-[12px]"}>
-                    <div className={"flex gap-x-[20px]"}>
+                <div className={"flex flex-col bg-wraper w-full rounded-[22px] py-[22px] px-[12px]"}>
+                    <div className={"w-full flex gap-x-[20px]"}>
                         <div className={"relative w-full"}>
                             <Input
                                 id={"userValue"}
@@ -90,7 +89,7 @@ export const PostPage:FC<IPostPage> = ({}) => {
                         </div>
                     </div>
                     <div className={"pt-[10px] px-[30px] text-[14px] text-inf"}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                     </div>
                 </div>
                 {
@@ -114,6 +113,5 @@ export const PostPage:FC<IPostPage> = ({}) => {
                     </>
                 }
             </div>
-        </div>
     )
 }
