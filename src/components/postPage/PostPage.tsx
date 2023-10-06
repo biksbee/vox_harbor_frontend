@@ -60,7 +60,7 @@ export const PostPage:FC<IPostPage> = ({}) => {
     }
 
     return(
-            <div className={"mb-[50px] w-full cb"}>
+            <div className={"mb-[50px] w-full"}>
                 <div className={"text-[#f00]"}>
                     https://t.me/sotaproject/67243
                 </div>
