@@ -1,5 +1,5 @@
 'use client'
-import {FC} from "react";
+import {FC, useRef} from "react";
 import {
     CategoryScale,
     Chart as ChartJS,
@@ -10,11 +10,15 @@ import {
     TimeScale,
     Title,
     Tooltip,
+    Chart,
+    ChartTypeRegistry
 } from 'chart.js';
+import { Button } from "@/components/UI/button/Button";
 import {Line} from 'react-chartjs-2';
 import {generatePoints} from "@/hooks/reaction";
 import 'chartjs-adapter-moment';
 import autocolors from 'chartjs-plugin-autocolors';
+import { MiniMap } from "@/components/charts/miniMap/MiniMap";
 
 ChartJS.register(
     CategoryScale,
@@ -54,8 +58,15 @@ interface IChartsLiner {
 }
 
 export const ChartsLiner: FC<IChartsLiner> = (liner) => {
+
+    const chartRef = useRef<Chart<keyof ChartTypeRegistry, unknown> | null>(null)
     const {res, chooseChart, title} = liner;
     const dataForChart = generatePoints(res);
+
+    const handleResetZoom = () => {
+        if(chartRef.current)
+            chartRef.current.resetZoom()
+    }
 
     const options = {
         responsive: true,
@@ -77,6 +88,7 @@ export const ChartsLiner: FC<IChartsLiner> = (liner) => {
                 zoom: {
                     drag: {
                         enabled: true,
+                        modifierKey: 'shift'
                     },
                     mode: 'x' as const,
                 }
@@ -98,7 +110,6 @@ export const ChartsLiner: FC<IChartsLiner> = (liner) => {
             return x !== '@views'
         });
     }
-
     const data = {
         datasets: keys.map((item) => (
             {
@@ -112,10 +123,13 @@ export const ChartsLiner: FC<IChartsLiner> = (liner) => {
 
     return (
         <div>
-            <div className={"w-full flex justify-center text-[26px]"}>
-                {chooseChart}
-            </div>
-            <Line options={options} data={data}/>
+            <Button
+                text={"сбросить ZOOM"}
+                handler={handleResetZoom}
+                type={"default"}
+            />
+            <Line ref={chartRef} options={options} data={data}/>
+            {/*<MiniMap data={data} />*/}
         </div>
     )
 }

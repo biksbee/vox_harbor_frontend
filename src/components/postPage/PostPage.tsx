@@ -11,13 +11,16 @@ import {ChartsLiner} from "@/components/charts/ChartsLiner";
 import {useAppDispatch, useAppSelector} from "@/app/store/hooks/useActions";
 
 import {reactionByUrl} from "@/app/store/features/post/post";
+import res from "@/mock/dataCharts.json"
 
 interface IPostPage {
 
 }
 
 export const PostPage:FC<IPostPage> = ({}) => {
-    const [value, setValue] = useState<string>("")
+
+
+    const [value, setValue] = useState<string>("https://t.me/sotaproject/67243")
     const [type, setType] = useState<string>("")
     const [disabled, setDisabled] = useState<boolean>(true)
 
@@ -71,7 +74,7 @@ export const PostPage:FC<IPostPage> = ({}) => {
                         <div className={"relative w-full"}>
                             <Input
                                 id={"userValue"}
-                                text={"ссылка на пост"}
+                                text={"ссылка на пост, url:"}
                                 value={value}
                                 setValue={setValue}
                                 setType={setType}
@@ -91,7 +94,7 @@ export const PostPage:FC<IPostPage> = ({}) => {
                         </div>
                     </div>
                     <div className={"pt-[10px] px-[30px] text-[14px] text-inf"}>
-                        Сервис находится на стадии MVP. Пока мы индексируем лишь малю часть каналов, но наш охват постоянно расширяется!
+                        Сервис находится на стадии MVP. Пока мы индексируем лишь малую часть каналов, но наш охват постоянно расширяется!
                     </div>
                 </div>
                 {
@@ -100,16 +103,22 @@ export const PostPage:FC<IPostPage> = ({}) => {
                         <div className={"mt-[50px] flex justify-center"}>
                             <PostNavbar
                                 setChooseChart={setChooseChart}
+                                chooseChart={chooseChart}
                             />
+                        </div>
+                        <div className={"w-full flex justify-center text-[26px]"}>
+                            {chooseChart}
                         </div>
                         {
                             render() ||
-                            <div className={"mt-[30px] w-full"}>
-                                <ChartsLiner
-                                    res={res}
-                                    chooseChart={chooseChart}
-                                    title={`SOME CHARTS`}
-                                />
+                            <div className={"xx:w-full w-[100vw] xx:h-auto xx:overflow-hidden overflow-x-scroll px-[10px]"}>
+                                <div className={"mt-[30px] xx:w-full w-[1024px] xx:h-auto h-[512px] "}>
+                                    <ChartsLiner
+                                        res={res}
+                                        chooseChart={chooseChart}
+                                        title={`SOME CHARTS`}
+                                    />
+                                </div>
                             </div>
                         }
                     </>

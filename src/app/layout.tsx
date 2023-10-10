@@ -19,13 +19,13 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className="relative h-screen">
+    <html lang="en" className={"flex h-screen w-full"}>
+      <body className="relative w-full flex flex-col flex_features">
           <Providers>
               <Navbar />
               {children}
           </Providers>
-          {/*<Footer />*/}
+          <Footer />
       </body>
     </html>
   )

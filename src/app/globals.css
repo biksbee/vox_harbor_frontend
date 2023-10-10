@@ -4,7 +4,8 @@
 @tailwind utilities;
 
 html {
-    @apply w-full overflow-x-hidden
+    @apply w-full
+    overflow-x-hidden
 }
 
 @layer base {
@@ -34,7 +35,10 @@ html {
         -webkit-text-fill-color: transparent;
     }
     .text{
-        color: #4848E8FF;
+        color: #86a6cb;
+    }
+    .flex_features {
+        flex: 0 1 auto;
     }
 
 }
