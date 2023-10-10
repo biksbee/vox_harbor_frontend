@@ -19,8 +19,8 @@ export const PostNavbar:FC<IPostNavbar> = ({setChooseChart, chooseChart}) => {
         <div className={"w-full flex justify-center"}>
             <div
                 className={cn(
-                    "flex sm:w-max w-full z-40 relative",
-                    "rounded-2xl bg-wraper"
+                    "flex sm:w-max w-full",
+                    "rounded-2xl"
                 )}
             >
                     <Item
@@ -48,12 +48,12 @@ const Item:FC<IItem> = ({text, handler, side}) => {
     return(
         <div
             className={cn(
-                "text-center bg-white my-[4px] first:ml-[6px] last:mr-[6px] first:rounded-l-2xl last:rounded-r-2xl sm:w-[160px] w-full duration-500 border-[1px]",
-                "transition-all",
+                "text-center bg-white my-[4px] first:ml-[6px] last:mr-[6px] first:rounded-l-2xl last:rounded-r-2xl sm:w-[160px] w-full duration-500",
+                "transition-all cursor-pointer",
                 side === "emoji" ?
-                    "first:border-white last:bg-wraper fist:text-black last:text-white last:hover:bg-[#86a6cb] last:hover:text-black"
+                    "last:hover:shadow-xl"
                     :
-                    "last:border-white first:bg-wraper last:text-black first:text-white first:hover:bg-[#86a6cb] first:hover:text-black"
+                    "first:hover:shadow-xl"
             )}
             onClick={handler}
         >
