@@ -18,5 +18,5 @@ export const inputValidation = {
     channel: /^.{2,}$/,
     nick: /^.{2,}$/,
     user_id: /^[0-9]{8,}$/,
-    link: /^https:\/\/t.me\/[a-z0-9_\s/\]{2,}\/[0-9]{2,}$/,
+    link: /^https:\/\/t.me\/[A-Za-z0-9_\s/\]{2,}\/[0-9]{2,}$/,
 }
