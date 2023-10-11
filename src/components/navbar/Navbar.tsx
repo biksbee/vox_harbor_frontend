@@ -11,7 +11,7 @@ export const Navbar:FC = () => {
     const [open, setOpen] = useState<boolean>(false)
 
     return(
-        <div className={"z-20 fixed w-full bg-white h-[40px] top-0 xl:px-[120px] xx:px-[60px] md:px-[40px] px-[15px]"}>
+        <div className={"z-20 fixed w-full md:bg-[rgba(203,203,220,1)] bg-white h-[40px] top-0 xl:px-[120px] xx:px-[60px] md:px-[40px] px-[15px]"}>
             <div className={"flex h-full items-center justify-between"}>
                 <div className={"flex items-center"}>
                     <Logo />
@@ -20,7 +20,7 @@ export const Navbar:FC = () => {
                     className={cn(
                         "flex md:gap-x-[50px] gap-y-[25px] items-center md:w-max w-full",
                         "md:flex-row flex-col md:relative absolute left-0 md:top-0 duration-500 ",
-                        open ? "top-[40px] bg-white h-screen" : "top-[-100vh]",
+                        open ? "top-[40px] bg-[rgba(203,203,220,1)] h-screen" : "top-[-100vh]",
                     )}
                 >
                     {/*<Item*/}
